@@ -2,7 +2,7 @@
 def print_board(board):
     for row in board:
         print(" | ".join(row))
-        print("-" * 5)
+        print("-" * 9)
 
 def check_winner(board):
     for row in board:
@@ -29,13 +29,28 @@ def tic_tac_toe():
     player = "X"
     while True:
         print_board(board)
-        row = int(input("Enter row (0, 1, or 2) for player " + player + ": "))
-        col = int(input("Enter column (0, 1, or 2) for player " + player + ": "))
+        
+        # REPLACE these two lines:
+        # row = int(input("Enter row (0, 1, or 2) for player " + player + ": "))
+        # col = int(input("Enter column (0, 1, or 2) for player " + player + ": "))
+        
+        # WITH this block:
+        try:
+            row = int(input(f"Enter row (0-2) for player {player}: "))
+            col = int(input(f"Enter column (0-2) for player {player}: "))
+            if not (0 <= row <= 2 and 0 <= col <= 2):
+                print("Invalid input! Enter numbers between 0 and 2.")
+                continue
+        except ValueError:
+            print("Please enter a valid number.")
+            continue
+        
+        # Everything below stays exactly the same:
         if board[row][col] == " ":
             board[row][col] = player
             if check_winner(board):
                 print_board(board)
-                print("Player " + player + " wins!")  # player hasn't swapped yet
+                print("Player " + player + " wins!")
                 return
             if is_full(board):
                 print_board(board)
